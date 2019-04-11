@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtsalary;
     private TextView tvsalary, tvoutput;
     private Button btncalctax;
+    private float totalsalary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +26,21 @@ public class MainActivity extends AppCompatActivity {
         btncalctax.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            double salary  = Double.parseDouble(txtsalary.getText().toString());
+                float salary = Float.parseFloat(txtsalary.getText().toString());
 
-                TaxAmountActivity calculate = new TaxAmountActivity();
-                calculate.setSalary(salary);
-                double result = calculate.taxCalculate();
-                tvoutput.setText(Double.toString(result));
+                TaxAmountActivity calculate = new TaxAmountActivity(salary);
+                float taxamt1 = calculate.totaltaxamt1();
+                float taxamt2 = calculate.totaltaxamt2();
+                float taxamt3 = calculate.totaltaxamt3();
+
+                if (totalsalary <= 200000) {
+                    tvoutput.setText(Float.toString(taxamt1));
+                } else if (totalsalary > 200000 && totalsalary <= 300000) {
+                    tvoutput.setText(Float.toString(taxamt2));
+                } else {
+                    tvoutput.setText(Float.toString(taxamt3));
+                }
+
             }
         });
     }
